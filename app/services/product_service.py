@@ -5,14 +5,56 @@ from sqlalchemy.orm import Session
 from app.repositories.product_repo import ProductRepository
 from app.schemas.product import ProductCreate, ProductOut, ProductUpdate
 
+# Allowed sort fields and directions
+_ALLOWED_SORT_FIELDS = {"name", "price", "quantity", "updated_at"}
+_ALLOWED_SORT_DIRS = {"asc", "desc"}
+
 class ProductService:
     """Business logic for product operations."""
     def __init__(self, db: Session) -> None:
         self.repo = ProductRepository(db)
 
-    def list(self, q: Optional[str] = None) -> List[ProductOut]:
-        """List products, optionally filtered by q."""
-        items = self.repo.list(q=q)
+    def list(
+        self,
+        q: Optional[str] = None,
+        *,
+        min_price: Optional[float] = None,
+        max_price: Optional[float] = None,
+        min_qty: Optional[int] = None,
+        has_image: Optional[bool] = None,
+        sort_by: str = "name",
+        sort_dir: str = "asc",
+    ) -> List[ProductOut]:
+        """
+        List products supporting:
+        - search: q (substring match on name, ILIKE)
+        - filtering: min_price, max_price, min_qty, has_image
+        - sorting: sort_by (name|price|quantity|updated_at), sort_dir (asc|desc)
+        """
+        # Normalize and validate sorting
+        sort_by = (sort_by or "name").lower()
+        sort_dir = (sort_dir or "asc").lower()
+
+        if sort_by not in _ALLOWED_SORT_FIELDS:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"Invalid sort_by '{sort_by}'. Allowed: {sorted(_ALLOWED_SORT_FIELDS)}",
+            )
+        if sort_dir not in _ALLOWED_SORT_DIRS:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"Invalid sort_dir '{sort_dir}'. Allowed: {sorted(_ALLOWED_SORT_DIRS)}",
+            )
+
+        items = self.repo.list(
+            q=q,
+            min_price=min_price,
+            max_price=max_price,
+            min_qty=min_qty,
+            has_image=has_image,
+            sort_by=sort_by,
+            sort_dir=sort_dir,
+        )
         return [ProductOut.model_validate(i) for i in items]
 
     def get(self, product_id: int) -> ProductOut:

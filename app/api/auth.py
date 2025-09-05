@@ -15,6 +15,6 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=Token)
 def login(payload: LoginRequest, db: Session = Depends(get_db)):
-    """Authenticate and return a JWT access token."""
+    """Authenticate and return a JWT access token (contains 'role')."""
     token = UserService(db).login(payload.email, payload.password)
     return Token(access_token=token)

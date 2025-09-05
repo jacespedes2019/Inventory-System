@@ -11,16 +11,17 @@ class UserService:
         self.repo = UserRepository(db)
 
     def register(self, data: UserCreate) -> UserOut:
-        """Register a new user if email is not taken."""
+        """Register a new user; role defaults to 'user' unless provided."""
         if self.repo.get_by_email(data.email):
             raise HTTPException(status_code=400, detail="Email already registered")
         hashed = hash_password(data.password)
-        user = self.repo.create(email=data.email, password_hash=hashed)
+        # persist role
+        user = self.repo.create(email=data.email, password_hash=hashed, role=data.role or "user")
         return UserOut.model_validate(user)
 
     def login(self, email: str, password: str) -> str:
-        """Validate credentials and return a JWT token."""
+        """Validate credentials and return a JWT token including the user's role."""
         user = self.repo.get_by_email(email)
         if not user or not verify_password(password, user.password_hash):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
-        return create_access_token(subject=str(user.id))
+        return create_access_token(subject=str(user.id), role=user.role)

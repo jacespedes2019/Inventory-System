@@ -16,9 +16,14 @@ def verify_password(plain: str, hashed: str) -> bool:
     """Verify a plain password against a bcrypt hash."""
     return pwd_context.verify(plain, hashed)
 
-def create_access_token(subject: str, expires_hours: Optional[int] = None) -> str:
-    """Create a signed JWT token encoding the subject (user id)."""
+def create_access_token(subject: str, role: str, expires_hours: Optional[int] = None) -> str:
+    """Create a signed JWT token encoding the subject (user id) and role."""
     exp_hours = expires_hours or settings.JWT_EXPIRES_HOURS
     now = datetime.utcnow()
-    payload = {"sub": subject, "iat": now, "exp": now + timedelta(hours=exp_hours)}
+    payload = {
+        "sub": subject,
+        "role": role,
+        "iat": now,
+        "exp": now + timedelta(hours=exp_hours),
+    }
     return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALG)

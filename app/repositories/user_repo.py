@@ -12,9 +12,9 @@ class UserRepository:
         """Return user by email or None."""
         return self.db.query(User).filter(User.email == email).first()
 
-    def create(self, email: str, password_hash: str) -> User:
-        """Create and persist a user."""
-        user = User(email=email, password_hash=password_hash)
+    def create(self, email: str, password_hash: str, role: str = "user") -> User:
+        """Create and persist a user with the given role."""
+        user = User(email=email, password_hash=password_hash, role=role)
         self.db.add(user)
         self.db.commit()
         self.db.refresh(user)
