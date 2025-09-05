@@ -8,7 +8,6 @@ from app.schemas.product import ProductCreate, ProductOut, ProductUpdate
 from app.services.product_service import ProductService
 
 router = APIRouter(
-    prefix="/products",
     tags=["products"],
     # Any authenticated user can access this router.
     dependencies=[Depends(get_current_identity)],

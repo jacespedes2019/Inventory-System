@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -20,11 +21,15 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(products.router, prefix="/products", tags=["products"])
 
-@app.on_event("startup")
-def on_startup() -> None:
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Code to execute during startup
     """Create tables if they do not exist (local/dev only)."""
     init_db()
-
+    yield
+    # Code to execute during shutdown
+    print("Application shutdown!")
+    
 @app.get("/")
 def healthcheck():
     """Simple health endpoint."""
