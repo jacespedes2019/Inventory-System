@@ -1,3 +1,17 @@
+/**
+ * File: ProductDetailModal.tsx
+ * Description: Modal to display detailed information about a product.
+ * Author: Jairo Céspedes
+ * Date: 2025-09-05
+ *
+ * Responsibilities:
+ * - Show product details including image, description, price, quantity, updated date.
+ * - Provide close action.
+ *
+ * Notes:
+ * - Read-only view, does not allow editing.
+ * - Requires product object passed from parent.
+ */
 import type { ProductOut } from "../types/product";
 
 export default function ProductDetailModal({

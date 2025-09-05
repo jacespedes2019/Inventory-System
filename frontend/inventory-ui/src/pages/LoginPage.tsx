@@ -1,3 +1,18 @@
+/**
+ * File: LoginPage.tsx
+ * Description: Authentication page with tabs for Sign in and Sign up.
+ * Author: Jairo Céspedes
+ * Date: 2025-09-05
+ *
+ * Responsibilities:
+ * - Render forms for login and registration.
+ * - Handle role selection during registration (admin or user).
+ * - Display validation errors and API errors.
+ *
+ * Notes:
+ * - Uses react-hook-form and zod for form validation.
+ * - On success, redirects to the dashboard.
+ */
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -1,6 +1,22 @@
+/**
+ * File: products.ts
+ * Description: Zustand store for managing products and their CRUD operations.
+ * Author: Jairo Céspedes
+ * Date: 2025-09-05
+ *
+ * Responsibilities:
+ * - Manage product list and state (loading, error).
+ * - Provide methods for listing, creating, updating, and deleting products.
+ * - Support search, filtering, and sorting queries.
+ *
+ * Notes:
+ * - Uses the preconfigured Axios client.
+ * - State is reactive and consumed in Dashboard and components.
+ */
+
 import { create } from "zustand";
+import { ProductsRepo } from "../repositories/products.repo";
 import type { ProductCreate, ProductOut, ProductUpdate } from "../types/product";
-import client from "../api/client";
 
 export type ListQuery = {
   q?: string;
@@ -28,31 +44,48 @@ export const useProducts = create<ProductsState>((set, get) => ({
   error: null,
 
   async list(query) {
+    // Defensive: clear previous errors and set loading
     set({ loading: true, error: null });
-    const params: Record<string, any> = {};
-    if (query) {
-      for (const [k, v] of Object.entries(query)) {
-        if (v !== undefined && v !== null && v !== "") params[k] = v;
-      }
+    try {
+      const data = await ProductsRepo.list(query);
+      set({ items: data, loading: false });
+    } catch (e: any) {
+      // Map error to user-friendly message
+      set({ error: e?.message ?? "Failed to fetch products", loading: false });
     }
-    const { data } = await client.get<ProductOut[]>("/products/", { params });
-    set({ items: data, loading: false });
   },
 
   async create(payload) {
-    const { data } = await client.post<ProductOut>("/products/", payload);
-    set({ items: [data, ...get().items] });
-    return data;
+    try {
+      const data = await ProductsRepo.create(payload);
+      set({ items: [data, ...get().items] });
+      return data;
+    } catch (e: any) {
+      set({ error: e?.message ?? "Failed to create product" });
+      throw e;
+    }
   },
 
   async update(id, payload) {
-    const { data } = await client.put<ProductOut>(`/products/${id}`, payload);
-    set({ items: get().items.map((it) => (it.id === id ? data : it)) });
-    return data;
+    try {
+      const data = await ProductsRepo.update(id, payload);
+      set({ items: get().items.map((it) => (it.id === id ? data : it)) });
+      return data;
+    } catch (e: any) {
+      set({ error: e?.message ?? "Failed to update product" });
+      throw e;
+    }
   },
 
   async remove(id) {
-    await client.delete(`/products/${id}`);
-    set({ items: get().items.filter((it) => it.id !== id) });
+    // Optional: optimistic update + rollback on failure
+    const prev = get().items;
+    set({ items: prev.filter((it) => it.id !== id) });
+    try {
+      await ProductsRepo.remove(id);
+    } catch (e: any) {
+      set({ items: prev, error: e?.message ?? "Failed to delete product" });
+      throw e;
+    }
   },
 }));

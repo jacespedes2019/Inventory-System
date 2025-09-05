@@ -1,7 +1,31 @@
-import { create } from "zustand";
-import client from "../api/client";
+/**
+ * File: auth.ts
+ * Description: Zustand store for authentication state and actions.
+ * Author: Jairo Céspedes
+ * Date: 2025-09-05
+ *
+ * Responsibilities:
+ * - Manage user authentication state (token, email, role).
+ * - Provide actions for login, register, and logout.
+ * - Decode JWT payload to extract user role.
+ *
+ * Notes:
+ * - Token is persisted in localStorage for session continuity.
+ * - Role is required for RBAC in frontend components.
+ */
 
-type Role = "admin" | "user";
+import { create } from "zustand";
+import { AuthRepo, type Role } from "../repositories/auth.repo";
+
+// Helper to decode role from JWT (UI-only, no validation)
+function decodeRole(token: string): Role | null {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1] || ""));
+    return (payload.role as Role) ?? null;
+  } catch {
+    return null;
+  }
+}
 
 type AuthState = {
   token: string | null;
@@ -12,24 +36,13 @@ type AuthState = {
   logout: () => void;
 };
 
-// decode role from JWT (UI-only, no signature validation)
-function decodeRole(token: string): Role | null {
-  try {
-    const payload = JSON.parse(atob(token.split(".")[1] || ""));
-    return (payload.role as Role) ?? null;
-  } catch {
-    return null;
-  }
-}
-
 export const useAuth = create<AuthState>((set) => ({
   token: localStorage.getItem("token"),
   email: localStorage.getItem("email"),
   role: (localStorage.getItem("role") as Role | null) ?? null,
 
   async login(email, password) {
-    const { data } = await client.post("/auth/login", { email, password });
-    const token = data.access_token as string;
+    const token = await AuthRepo.login(email, password);
     const role = decodeRole(token);
 
     localStorage.setItem("token", token);
@@ -40,10 +53,9 @@ export const useAuth = create<AuthState>((set) => ({
   },
 
   async register(email, password, role) {
-    await client.post("/auth/register", { email, password, role });
+    await AuthRepo.register(email, password, role);
     // auto-login after register
-    const { data } = await client.post("/auth/login", { email, password });
-    const token = data.access_token as string;
+    const token = await AuthRepo.login(email, password);
     const decodedRole = decodeRole(token);
 
     localStorage.setItem("token", token);

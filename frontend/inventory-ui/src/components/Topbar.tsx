@@ -1,3 +1,16 @@
+/**
+ * File: Topbar.tsx
+ * Description: Top navigation bar for the dashboard.
+ * Author: Jairo Céspedes
+ * Date: 2025-09-05
+ *
+ * Responsibilities:
+ * - Display application title and current user information.
+ * - Provide logout button.
+ *
+ * Notes:
+ * - Consumes auth store for user data.
+ */
 import { useAuth } from "../store/auth";
 
 

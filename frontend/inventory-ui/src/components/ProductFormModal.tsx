@@ -1,3 +1,18 @@
+/**
+ * File: ProductFormModal.tsx
+ * Description: Modal form to create or edit a product.
+ * Author: Jairo Céspedes
+ * Date: 2025-09-05
+ *
+ * Responsibilities:
+ * - Render controlled form for product fields (name, price, qty, image).
+ * - Validate inputs using react-hook-form + zod.
+ * - Submit create or update requests to product store.
+ *
+ * Notes:
+ * - Closes modal automatically on success.
+ * - Shows preview of product image when URL is entered.
+ */
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

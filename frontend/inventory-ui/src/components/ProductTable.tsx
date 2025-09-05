@@ -1,3 +1,16 @@
+/**
+ * File: ProductTable.tsx
+ * Description: Table component to list products with actions.
+ * Author: Jairo Céspedes
+ * Date: 2025-09-05
+ *
+ * Responsibilities:
+ * - Render product list with name, price, quantity, and updated date.
+ * - Provide buttons for view, edit, and delete actions.
+ *
+ * Notes:
+ * - Requires parent props for onEdit, onView, and admin permissions.
+ */
 import { useProducts } from "../store/products";
 import type { ProductOut } from "../types/product";
 

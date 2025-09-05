@@ -1,3 +1,18 @@
+/**
+ * File: DashboardPage.tsx
+ * Description: Main dashboard for product management.
+ * Author: Jairo Céspedes
+ * Date: 2025-09-05
+ *
+ * Responsibilities:
+ * - Display filters for searching, sorting, and filtering products.
+ * - Render inventory table with products.
+ * - Handle product creation, editing, and viewing via modals.
+ *
+ * Notes:
+ * - Access is role-based (admin can edit/delete, user is read-only).
+ * - Uses Zustand stores for reactive state.
+ */
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import { useProducts } from "../store/products";
