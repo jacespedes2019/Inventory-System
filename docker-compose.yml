@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:15
+    container_name: inventory_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: inventory
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: inventory_backend
+    depends_on:
+      - db
+    environment:
+      environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:postgres@db:5432/inventory
+      JWT_SECRET: supersecret
+      JWT_ALG: HS256
+      JWT_EXPIRES_HOURS: 8
+    ports:
+      - "8000:8000"
+    # Opcional: hot-reload del código en dev
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend/inventory-ui
+    container_name: inventory_frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+    # No necesita variables si usas proxy /api en nginx.conf
+
+volumes:
+  postgres_data:
