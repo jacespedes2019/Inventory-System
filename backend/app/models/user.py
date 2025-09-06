@@ -1,3 +1,18 @@
+"""
+File: user.py
+Description: SQLAlchemy model for system users.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Define `users` table with fields id, email, hashed_password, role, created_at.
+- Store authentication and role-based access control information.
+
+Notes:
+- Roles supported: "admin", "user".
+- Passwords are stored as bcrypt hashes for security.
+"""
+
 from datetime import datetime
 from sqlalchemy import String, Integer, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column

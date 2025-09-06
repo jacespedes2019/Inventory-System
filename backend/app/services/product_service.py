@@ -1,3 +1,18 @@
+"""
+File: product_service.py
+Description: Business logic for product management.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Interact with ProductRepository to perform CRUD operations.
+- Transform ORM objects into Pydantic models for API responses.
+- Handle optional filters and sorting for product listings.
+
+Notes:
+- Keeps controllers (routers) clean by separating logic.
+- Returns Pydantic models to enforce schema consistency.
+"""
 from typing import List, Optional
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session

@@ -1,3 +1,19 @@
+"""
+File: user.py
+Description: Pydantic schemas for user-related requests and responses.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Define request models (UserCreate, LoginRequest).
+- Define response models (UserOut, Token).
+- Ensure data validation for authentication and user registration.
+
+Notes:
+- Passwords are required only for registration and login.
+- Token schema provides access_token and token_type.
+"""
+
 from datetime import datetime
 from typing import Literal, Optional
 from pydantic import BaseModel, ConfigDict, EmailStr

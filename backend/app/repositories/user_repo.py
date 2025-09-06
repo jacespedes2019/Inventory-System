@@ -1,3 +1,13 @@
+"""
+File: user_repo.py
+Description: Repository for querying and persisting User entities.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Provide database operations for the User entity.
+- Encapsulate logic to fetch, create, and search users by email or id.
+"""
 from typing import Optional
 from sqlalchemy.orm import Session
 

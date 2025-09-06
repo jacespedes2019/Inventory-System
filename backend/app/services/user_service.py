@@ -1,3 +1,19 @@
+"""
+File: user_service.py
+Description: Business logic for user registration and authentication.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Register new users with hashed passwords.
+- Authenticate user credentials against database.
+- Generate JWT tokens for authenticated users.
+
+Notes:
+- Delegates DB operations to SQLAlchemy session.
+- Raises exceptions for invalid credentials or duplicate emails.
+"""
+
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
