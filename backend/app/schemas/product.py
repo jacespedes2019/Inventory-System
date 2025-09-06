@@ -1,3 +1,19 @@
+"""
+File: product.py
+Description: Pydantic schemas for product-related requests and responses.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Define ProductCreate, ProductUpdate for input validation.
+- Define ProductOut for response serialization.
+- Ensure consistent typing for product fields.
+
+Notes:
+- Pydantic automatically converts numeric strings to floats where required.
+- Optional fields are allowed in updates.
+"""
+
 from datetime import datetime
 from decimal import Decimal
 from typing import Optional

@@ -1,3 +1,20 @@
+"""
+File: main.py
+Description: FastAPI application entrypoint with middleware and route registration.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Initialize FastAPI instance with title and configuration.
+- Configure CORS middleware for cross-origin requests.
+- Include routers for authentication and product APIs.
+- Run startup events such as database initialization.
+- Provide healthcheck endpoint for monitoring.
+
+Notes:
+- API documentation available at /docs and /redoc.
+- All routes are prefixed according to their domain (e.g., /auth, /products).
+"""
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

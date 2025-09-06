@@ -1,3 +1,19 @@
+"""
+File: product_repo.py
+Description: Repository for querying and persisting Product entities.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Query products with optional filters (name, price, quantity, has_image).
+- Support sorting by name, price, quantity, or updated_at.
+- Provide CRUD operations (create, get, update, delete).
+
+Notes:
+- Uses SQLAlchemy select statements for efficiency.
+- Return values are SQLAlchemy ORM Product instances.
+"""
+
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import select, and_, or_, asc, desc

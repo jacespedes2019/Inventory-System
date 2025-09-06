@@ -1,3 +1,18 @@
+"""
+File: product.py
+Description: SQLAlchemy model for inventory products.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Define `products` table with fields id, name, description, price, quantity, image_url, updated_at.
+- Represent products in the inventory system.
+
+Notes:
+- Price is stored as numeric (float).
+- updated_at auto-refreshes on modification.
+"""
+
 from sqlalchemy import String, Integer, Numeric, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column
 from decimal import Decimal

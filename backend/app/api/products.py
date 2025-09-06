@@ -1,3 +1,20 @@
+"""
+File: products.py
+Description: Product management API endpoints.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- List products with optional search, filtering, and sorting.
+- Retrieve product by id.
+- Create, update, and delete products (admin only).
+- Integrate with ProductService and ProductRepository.
+
+Notes:
+- Endpoints are protected with JWT authentication.
+- Role-based restrictions enforced: admin can write, user read-only.
+"""
+
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, Query, status

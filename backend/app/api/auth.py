@@ -1,3 +1,20 @@
+"""
+File: auth.py
+Description: Authentication and authorization API endpoints.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Register new users with email, password, and role.
+- Authenticate users and return JWT tokens.
+- Protect endpoints with JWT Bearer authentication.
+
+Notes:
+- Passwords are hashed using bcrypt before storage.
+- JWT tokens embed `sub` (user id) and `role`.
+- Tokens are required for accessing protected routes.
+""" 
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 

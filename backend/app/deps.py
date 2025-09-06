@@ -1,3 +1,19 @@
+"""
+File: deps.py
+Description: Dependency functions for FastAPI routes.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Provide database session dependency (get_db).
+- Extract current user id and role from Bearer JWT (get_current_identity).
+- Enforce role-based access using require_roles dependency.
+
+Notes:
+- Invalid or missing tokens raise HTTP 401.
+- Unauthorized roles raise HTTP 403.
+"""
+
 from fastapi import HTTPException, Security, status, Request, Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt, JWTError

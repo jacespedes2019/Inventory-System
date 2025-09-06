@@ -1,3 +1,19 @@
+"""
+File: security.py
+Description: Security helpers for password hashing and JWT management.
+Author: Jairo Céspedes
+Date: 2025-09-05
+
+Responsibilities:
+- Hash and verify passwords with bcrypt.
+- Generate JWT tokens with user id and role claims.
+- Decode and validate JWT tokens.
+
+Notes:
+- Tokens use HS256 algorithm by default.
+- Secret key loaded from environment configuration.
+"""
+
 from datetime import datetime, timedelta
 from typing import Optional
 
