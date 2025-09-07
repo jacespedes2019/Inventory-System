@@ -28,7 +28,7 @@ Asegúrate de tener instalado:
 
 ### 2. Construir y levantar los servicios con Docker
     docker-compose up --build
-En la carpeta base, es posible que debido a que se tiene que crear la bd al inicio falle en la primera iteración, así que simplemente es poner CTRL + C y volver a ejecutar el comando.
+En la carpeta base, es posible que debido a que se tiene que crear la bd al inicio, falle en la primera iteración, así que simplemente es poner CTRL + C y volver a ejecutar el comando.
 
 ### Registro y Roles de Usuario
 
