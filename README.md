@@ -7,6 +7,7 @@ Por Jairo Adolfo Céspedes Plata
 
 La documentación interactiva del backend está disponible en:
 - **Swagger UI:** `http://localhost:8000/docs`
+
 La documentación técnica se encuentra en el pdf **SistemaInventario_Documentacion.pdf**
 ---
 
