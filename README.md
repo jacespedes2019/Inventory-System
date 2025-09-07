@@ -5,7 +5,7 @@ Incluye autenticación con **JWT Bearer**, control de roles (**admin / user**), 
 
 Por Jairo Adolfo Céspedes Plata
 
-La documentación técnica se encuentra en el pdf **SistemaInventario_Documentacion.pdf**
+La documentación técnica se encuentra en el pdf **SistemaInventario_Documentacion.pdf** y en cada archivo de código
 
 La documentación interactiva del backend está disponible en:
 - **Swagger UI:** `http://localhost:8000/docs`
