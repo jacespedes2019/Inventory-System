@@ -1,4 +1,4 @@
-# 📦 Inventory System (Prueba Técnica)
+# 📦 Inventory System
 
 Este proyecto implementa un sistema de **gestión de inventario** con un backend en **FastAPI** y un frontend en **React (Vite + TypeScript + Tailwind CSS)**.  
 Incluye autenticación con **JWT Bearer**, control de roles (**admin / user**), CRUD completo de productos, búsqueda, filtrado, ordenamiento y dockerización con PostgreSQL.
@@ -28,7 +28,7 @@ Asegúrate de tener instalado:
 
 ### 2. Construir y levantar los servicios con Docker
     docker-compose up --build
-En la carpeta base
+En la carpeta base, es posible que debido a que se tiene que crear la bd al inicio falle en la primera iteración, así que simplemente es poner CTRL + C y volver a ejecutar el comando.
 
 ### Registro y Roles de Usuario
 
